@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programa de Salud del Adulto - MINSA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body, html {
+            width: 100%; height: 100%;
+            background: #020617; color: #f8fafc;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
+        /* Ocultar barra de scroll */
+        body::-webkit-scrollbar { display: none; }
+
+        /* Fondo épico con patrón */
+        .bg-pattern {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(rgba(14, 165, 233, 0.15) 2px, transparent 2px);
+            background-size: 40px 40px; z-index: -1;
+        }
+        .bg-gradient {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, #020617 80%);
+            z-index: -1;
+        }
+
+        /* Barra de progreso */
+        #progress-bar {
+            position: fixed; top: 0; left: 0; height: 6px;
+            background: linear-gradient(90deg, #0ea5e9, #10b981);
+            z-index: 1000; width: 0%; border-radius: 0 5px 5px 0;
+            box-shadow: 0 0 15px #0ea5e9;
+        }
+
+        /* Contenedor de cada Slide */
+        .slide {
+            width: 100%; height: 100vh;
+            scroll-snap-align: start;
+            display: flex; align-items: center; justify-content: center;
+            position: relative; padding: 5%;
+        }
+
+        .container {
+            position: relative; z-index: 10;
+            display: flex; width: 100%; max-width: 1300px;
+            align-items: center; gap: 60px;
+        }
+
+        .slide:nth-child(even) .container { flex-direction: row-reverse; }
+
+        /* Elementos iniciales ocultos para la animación */
+        .glass-card {
+            flex: 1.2; background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px; padding: 45px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            border-left: 5px solid #0ea5e9;
+            opacity: 0; transform: translateX(-100px); transition: all 1s ease-out;
+        }
+        .slide:nth-child(even) .glass-card { transform: translateX(100px); border-left: none; border-right: 5px solid #10b981; }
+
+        .img-container {
+            flex: 1; position: relative; border-radius: 24px;
+            height: 60vh; border: 2px solid rgba(255,255,255,0.1);
+            opacity: 0; transform: scale(0.8); transition: all 1s ease-out 0.2s;
+            box-shadow: 0 0 40px rgba(14, 165, 233, 0.2);
+        }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; border-radius: 22px; }
+        
+        /* Animación cuando entran a pantalla */
+        .slide.show .glass-card { opacity: 1; transform: translateX(0); }
+        .slide.show .img-container { opacity: 1; transform: scale(1); }
+
+        /* Textos */
+        .badge { display: inline-block; background: rgba(14, 165, 233, 0.2); color: #38bdf8; padding: 8px 20px; border-radius: 30px; font-weight: 800; font-size: 1rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;}
+        h2 { font-size: 3.2rem; font-weight: 800; line-height: 1.1; margin-bottom: 25px; color: #fff;}
+        p { font-size: 1.2rem; line-height: 1.7; color: #94a3b8; }
+
+        /* Contadores fijos */
+        .counter { position: absolute; bottom: 40px; right: 50px; font-size: 1.5rem; font-weight: 800; color: rgba(255,255,255,0.2); font-family: monospace; }
+        .footer-static { position: fixed; bottom: 20px; left: 30px; font-size: 0.85rem; color: rgba(255,255,255,0.4); z-index: 100; font-weight: bold; letter-spacing: 1px;}
+
+    </style>
+</head>
+<body>
+
+    <div class="bg-pattern"></div>
+    <div class="bg-gradient"></div>
+
+    <div id="progress-bar"></div>
+    <div class="footer-static"><i class="fas fa-laptop-medical"></i> </div>
+
+    <!-- Contenedor donde se inyectan las 35 diapositivas -->
+    <main id="app"></main>
+
+    <script>
+        // Data de las 35 diapositivas (Sacado de la NTS N.° 229-MINSA/DGIESP-2025)
+        const slidesData = [
+            { badge: "01. Inicio", title: "Programa de Salud del Adulto", desc: "Análisis de la Norma Técnica de Salud N.° 229-MINSA/DGIESP-2025, aprobada por Resolución Ministerial N.° 310-2025-MINSA[cite: 5, 6].", img: "1576091160399-112ba8d25d1d" },
+            { badge: "02. Concepto", title: "La Persona Adulta", desc: "La normativa rige para la población de 30 a 59 años de edad, promoviendo atención integral según sus riesgos de salud[cite: 5].", img: "1573497620053-ea5300f94f21" },
+            { badge: "03. Etapa Vital", title: "Importancia de la Adultez", desc: "Las condiciones y comportamientos desarrollados en estos años influirán críticamente en el estado de salud actual y futuro del individuo[cite: 5].", img: "1522075469751-3a6694fb2f61" },
+            { badge: "04. Objetivos", title: "Objetivo General", desc: "Contribuir al mantenimiento y recuperación de la salud mediante la promoción, prevención de enfermedades, detección temprana y seguimiento[cite: 5].", img: "1505751172876-fa1923c5c528" },
+            { badge: "05. Detección", title: "Tamizajes Oportunos", desc: "Permiten identificar factores de riesgo de manera temprana, facilitando que el adulto reciba orientación y tratamientos complementarios[cite: 5].", img: "1584982751601-97dcc096659c" },
+            { badge: "06. Enfoques", title: "Atención Basada en Derechos", desc: "Los servicios aplican el curso de vida, interculturalidad, equidad de género, territorialidad y respeto por los derechos humanos[cite: 5].", img: "1511174511562-5f7f18b874f8" },
+            { badge: "07. Promoción", title: "Alimentación Saludable", desc: "Se orienta sobre hábitos alimentarios sanos, considerando siempre las características individuales y riesgos de cada persona[cite: 5].", img: "1490645935967-10de6ba17061" },
+            { badge: "08. Promoción", title: "Actividad Física", desc: "Mantenerse físicamente activo es el pilar para el bienestar general y la mejor prevención frente a factores de riesgo metabólicos[cite: 5].", img: "1538805060514-97d9cc17730c" },
+            { badge: "09. Entorno", title: "Seguridad y Ambiente", desc: "La higiene personal, el cuidado del ambiente y la cultura de seguridad vial son vitales para disminuir accidentes en adultos[cite: 5].", img: "1584515933487-779824d29309" },
+            { badge: "10. Riesgos", title: "Evaluación Integral", desc: "Se examina la presión arterial, glucosa, peso, perfil lipídico y antecedentes familiares para anticiparse a daños irreversibles[cite: 5].", img: "1579684385127-1ef15d508118" },
+            { badge: "11. ENT", title: "Hipertensión Arterial", desc: "Detectar el aumento de presión es vital porque esta enfermedad puede ser letal y permanecer asintomática por años[cite: 5].", img: "1584308666744-24d5c474f2ae" },
+            { badge: "12. ENT", title: "Diabetes Mellitus", desc: "La evaluación de glucosa se intensifica en personas que presentan factores como sobrepeso u obesidad y antecedentes familiares[cite: 5].", img: "1579684453423-f84349ef60b0" },
+            { badge: "13. Físico", title: "Sobrepeso y Obesidad", desc: "Constituyen amenazas principales para el desarrollo crónico de hipertensión, diabetes y enfermedades cardiovasculares severas[cite: 5].", img: "1605296867304-46d5465a13f1" },
+            { badge: "14. Prevención", title: "Oncología Preventiva", desc: "El tamizaje de cáncer se programa basándose en la edad, sexo, genética y factores de riesgo ambientales de cada paciente[cite: 5].", img: "1581594693702-fbdc51b2763b" },
+            { badge: "15. Cáncer Femenino", title: "Cuello Uterino (VPH)", desc: "Se combate mediante la citología (Papanicolaou), pruebas moleculares de VPH y la inspección visual con ácido acético (IVAA)[cite: 5].", img: "1576091160550-2173dba999ef" },
+            { badge: "16. Cáncer Femenino", title: "Cáncer de Mama", desc: "Se educa a la mujer para conocer los cambios en sus mamas e integrando el examen clínico regular para evitar desinformación[cite: 5].", img: "1559839734-2b71ea197ec2" },
+            { badge: "17. Cáncer General", title: "Próstata, Colon y Piel", desc: "La NTS contempla evaluaciones clínicas de piel en ambos sexos y despistajes específicos para el hombre y problemas gástricos[cite: 5].", img: "1532938911079-1b06ac7ceec7" },
+            { badge: "18. Psiquiatría", title: "Salud Mental Integral", desc: "Se emplean cuestionarios validados como el AUDIT o PHQ-9 para detectar depresión, ansiedad, violencia o alcoholismo[cite: 5].", img: "1520694478166-daaaaec95b69" },
+            { badge: "19. Hábitos", title: "Tabaco y Sustancias", desc: "El profesional identifica el consumo perjudicial, brindando consejería sin juzgar y facilitando la rehabilitación del adulto[cite: 5].", img: "1527628173875-3c7bfd28ad78" },
+            { badge: "20. Organización", title: "Paquete Priorizado", desc: "Conjunto de intervenciones de primera línea destinadas a frenar la aparición de enfermedades no transmisibles críticas[cite: 5].", img: "1506126613408-eca07ce68773" },
+            { badge: "21. Diagnóstico", title: "Evaluación Antropométrica", desc: "Se documenta el Índice de Masa Corporal (IMC) y perímetro abdominal, claves para calcular el riesgo metabólico del paciente[cite: 5].", img: "1517120026326-d877ce271595" },
+            { badge: "22. Diagnóstico", title: "Perfil Lipídico", desc: "Pruebas de laboratorio miden el colesterol y triglicéridos para frenar a tiempo los accidentes cerebrovasculares e infartos[cite: 5].", img: "1584036561566-baf8f5f1b144" },
+            { badge: "23. Etapas", title: "Adultos de 30 a 40 años", desc: "En este grupo joven, la prioridad es intervenir antes de que aparezcan las enfermedades crónicas, modificando estilos de vida[cite: 5].", img: "1522202176988-66273c2fd55f" },
+            { badge: "24. Etapas", title: "Adultos de 40 a 59 años", desc: "A esta edad, se hace obligatorio el tamizaje oncológico (cáncer de mama, próstata y colon) y el control de enfermedades crónicas[cite: 5].", img: "1559839734-2b71ea197ec2" },
+            { badge: "25. Enfermería", title: "Rol del Profesional", desc: "La enfermera/o es vital: valora, educa, previene, vigila y acompaña a la persona, familia y comunidad de forma continua[cite: 5].", img: "1584982751601-97dcc096659c" },
+            { badge: "26. Enfermería", title: "Valoración Temprana", desc: "Recopilar antecedentes médicos y calcular el IMC permite al profesional crear un plan de cuidado completamente personalizado[cite: 5].", img: "1579684385127-1ef15d508118" },
+            { badge: "27. Enfermería", title: "Educación y Consejería", desc: "Comunicación directa y sencilla para orientar sobre la prevención de infecciones, planificación familiar y control nutricional[cite: 5].", img: "1573497019940-1c28c88b4f3e" },
+            { badge: "28. Enfermería", title: "Detección de Violencia", desc: "Manteniendo estricta confidencialidad, el profesional identifica señales de abuso y activa los protocolos de protección de salud[cite: 5].", img: "1520694478166-daaaaec95b69" },
+            { badge: "29. Modalidades", title: "Oferta Fija y Telesalud", desc: "El adulto puede acudir presencialmente, o utilizar tecnologías de información para consultas y monitoreo a distancia[cite: 5].", img: "1519494026892-80bbd2d6fd0d" },
+            { badge: "30. Modalidades", title: "Oferta Móvil e In Situ", desc: "Incluye campañas comunitarias y las visitas domiciliarias, acercando el sistema de salud a pacientes con difícil acceso[cite: 5].", img: "1584516150909-c43483ee7932" },
+            { badge: "31. Social", title: "Participación Familiar", desc: "La familia apoya disminuyendo la sal, el azúcar y las grasas en casa, y fomentando la salud mental, pero respetando la autonomía[cite: 5].", img: "1511895426328-dc8714191300" },
+            { badge: "32. Social", title: "Fuerza Comunitaria", desc: "Instituciones y juntas vecinales pueden impulsar campañas deportivas masivas y acercar la educación preventiva a sus barrios[cite: 5].", img: "1529156069898-49953eb1f5ff" },
+            { badge: "33. Legalidad", title: "Derechos del Paciente", desc: "La NTS garantiza un trato digno, sin discriminación, con privacidad y autonomía para que el adulto tome decisiones informadas[cite: 5].", img: "1505751172876-fa1923c5c528" },
+            { badge: "34. Autocuidado", title: "Adherencia Médica", desc: "El paciente es responsable de seguir su tratamiento, asistir a controles y no abandonar medicamentos por decisión propia[cite: 5].", img: "1584308666744-24d5c474f2ae" },
+            { badge: "35. Final", title: "Envejecimiento Saludable", desc: "Un cuidado integral y preventivo durante la adultez garantiza llegar a la vejez conservando la máxima capacidad funcional[cite: 5].", img: "1522075469751-3a6694fb2f61" }
+        ];
+
+        const app = document.getElementById('app');
+
+        // Generar el HTML de las 35 diapositivas
+        let htmlContent = '';
+        slidesData.forEach((slide, index) => {
+            const num = (index + 1).toString().padStart(2, '0');
+            // Usamos un tamaño más ligero para que no se trabe (w=800)
+            const imgUrl = `https://images.unsplash.com/photo-${slide.img}?auto=format&fit=crop&w=800&q=80`;
+            const fallbackImg = `https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80`;
+
+            htmlContent += `
+                <section class="slide" id="slide-${index}">
+                    <div class="container">
+                        <div class="glass-card">
+                            <span class="badge">${slide.badge}</span>
+                            <h2>${slide.title}</h2>
+                            <p>${slide.desc}</p>
+                        </div>
+                        <div class="img-container">
+                            <!-- Sistema de respaldo por si falla la red -->
+                            <img src="${imgUrl}" onerror="this.src='${fallbackImg}'" alt="Salud">
+                        </div>
+                    </div>
+                    <div class="counter">${num} / 35</div>
+                </section>
+            `;
+        });
+        
+        // Inyectar al DOM
+        app.innerHTML = htmlContent;
+
+        // EL MOTOR DE ANIMACIONES (INTERSECTION OBSERVER - 100% SEGURO)
+        document.addEventListener("DOMContentLoaded", () => {
+            const slides = document.querySelectorAll('.slide');
+            const progressBar = document.getElementById('progress-bar');
+
+            // Actualizar la barra de progreso
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                progressBar.style.width = scrollPercent + '%';
+            });
+
+            // Activar las animaciones cuando el slide entra en pantalla
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                    } else {
+                        // Si quieres que el efecto se repita al subir, mantenemos el remove
+                        entry.target.classList.remove('show');
+                    }
+                });
+            }, { 
+                threshold: 0.4 // Se activa cuando el 40% del slide es visible
+            });
+
+            slides.forEach(slide => observer.observe(slide));
+        });
+    </script>
+</body>
+</html>
