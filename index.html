@@ -3,447 +3,439 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Analítico 3D - ODS 8</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <title>Programa de Salud del Adulto - Enfermería</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
     <style>
-        :root {
-            --ods-red: #a21942;
-            --ods-glow: rgba(162, 25, 66, 0.6);
-            --bg-dark: #030712;
-            --card-bg: rgba(15, 23, 42, 0.6);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --cyan: #22d3ee;
-            --pink: #f43f5e;
-            --emerald: #10b981;
-            --amber: #f59e0b;
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        
         body {
-            font-family: 'Space Grotesk', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(162, 25, 66, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(34, 211, 238, 0.1) 0%, transparent 40%);
-            background-attachment: fixed;
-        }
-
-        /* Efecto de partículas de fondo CSS puro */
-        .particles {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1;
-            background-image: radial-gradient(#ffffff 1px, transparent 1px);
-            background-size: 50px 50px;
-            opacity: 0.05;
-            animation: moveBg 20s linear infinite;
-        }
-        @keyframes moveBg { 0% { background-position: 0 0; } 100% { background-position: 100px 100px; } }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 60px 20px;
-        }
-
-        /* --- HEADER --- */
-        .header {
-            text-align: center;
-            margin-bottom: 80px;
-            animation: fadeInDown 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-        }
-        .header .badge {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--ods-red), #e11d48);
-            color: white;
-            padding: 8px 25px;
-            border-radius: 50px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            box-shadow: 0 0 20px var(--ods-glow);
-            margin-bottom: 25px;
-        }
-        .header h1 {
-            font-size: 4rem;
-            font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, #ffffff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-        }
-        .header p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 900px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        /* --- GRID 2x3 --- */
-        .grid-layout {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-            perspective: 2000px;
-        }
-
-        /* --- TARJETAS 3D --- */
-        .card-3d {
-            position: relative;
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            overflow: hidden;
-            backdrop-filter: blur(20px);
-            transform-style: preserve-3d;
-            transition: transform 0.15s ease-out;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-            display: flex;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 50%, #80cbc4 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #1e293b;
+            overflow: hidden; 
+            height: 100vh; 
+            display: flex; 
             flex-direction: column;
-            opacity: 0;
-            transform: translateY(50px) rotateX(10deg);
-        }
-        .card-3d.visible {
-            animation: popIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-        }
-        @keyframes popIn { to { opacity: 1; transform: translateY(0) rotateX(0); } }
-
-        .card-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 220px;
-            background-size: cover;
-            background-position: center;
-            opacity: 0.3;
-            z-index: 0;
-            mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
-            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);
         }
 
-        .card-content {
-            position: relative;
-            z-index: 2;
-            padding: 35px;
-            transform: translateZ(40px); /* Efecto 3D principal */
-            display: flex;
-            flex-direction: column;
-            height: 100%;
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .card-title {
-            font-size: 1.8rem;
-            color: #fff;
-            margin-top: 150px;
-            margin-bottom: 15px;
-            font-weight: 900;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 100; padding: 20px 50px;
+            display: flex; justify-content: space-between; align-items: center;
         }
-
-        .card-desc {
-            font-size: 1.05rem;
-            color: #cbd5e1;
-            line-height: 1.7;
-            margin-bottom: 30px;
-            transform: translateZ(20px); /* Texto flotante */
+        header .title-group {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 10px 25px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.8);
         }
-        .hl { color: #fff; font-weight: 700; text-shadow: 0 0 8px rgba(255,255,255,0.4); }
-
-        /* --- CONTENEDOR MATRICIAL --- */
-        .math-container {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 25px;
-            margin-top: auto;
-            transform: translateZ(60px); /* Matriz sale más hacia el usuario */
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            transition: border-color 0.3s;
-        }
-        .card-3d:hover .math-container {
-            border-color: var(--cyan);
-            box-shadow: 0 15px 35px rgba(34, 211, 238, 0.15);
-        }
-
-        .math-header {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 700;
-        }
-
-        .equation {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .matrix {
-            display: inline-grid;
-            gap: 12px 25px;
-            position: relative;
-            padding: 8px 25px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .matrix::before, .matrix::after {
-            content: "";
-            position: absolute;
-            top: 0; bottom: 0;
-            width: 10px;
-            border: 3px solid #64748b;
-        }
-        .matrix::before { left: 0; border-right: none; border-radius: 6px 0 0 6px; }
-        .matrix::after { right: 0; border-left: none; border-radius: 0 6px 6px 0; }
-
-        .m2x2 { grid-template-columns: repeat(2, 1fr); }
-        .m2x1 { grid-template-columns: 1fr; }
-        .m1x2 { grid-template-columns: repeat(2, 1fr); }
+        header h1 { font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 800; color: #00695c;}
+        header p { color: #00897b; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;}
         
-        .operator { color: white; font-size: 2rem; font-weight: bold; }
+        .progress-wrapper {
+            display: flex; align-items: center; gap: 20px;
+            background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px);
+            padding: 10px 25px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.8);
+        }
+        .progress-container { width: 200px; height: 8px; background: rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden;}
+        .progress-bar { height: 100%; background: linear-gradient(90deg, #00897b, #26a69a); width: 0%; transition: width 0.5s ease;}
+        .slide-counter { font-weight: 800; color: #00695c; font-size: 1rem;}
+
+        .swiper { width: 100%; height: 100vh; z-index: 10; }
+        .swiper-slide { display: flex; justify-content: center; align-items: center; padding: 60px 40px 20px 40px;}
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 30px; 
+            width: 100%; max-width: 1300px; height: 80vh;
+            display: flex; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 105, 92, 0.15);
+            opacity: 0; transform: translateY(50px) scale(0.95);
+            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .swiper-slide-active .glass-card { opacity: 1; transform: translateY(0) scale(1); }
+
+        .card-content { flex: 1; padding: 60px; display: flex; flex-direction: column; justify-content: center; z-index: 2; }
+        .card-media { flex: 1; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 30px;}
         
-        .math-footer {
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #64748b;
-            text-align: center;
-            border-top: 1px dashed rgba(255,255,255,0.1);
-            padding-top: 15px;
+        .icon-box { 
+            width: 70px; height: 70px; border-radius: 20px; 
+            background: linear-gradient(135deg, #26a69a, #00897b); 
+            display: flex; justify-content: center; align-items: center; 
+            font-size: 2rem; color: #fff; margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0, 137, 123, 0.3);
+            transform: translateY(20px); opacity: 0; transition: all 0.6s 0.3s ease;
         }
+        .swiper-slide-active .icon-box { transform: translateY(0); opacity: 1; }
 
-        /* Colores Neón */
-        .t-cyan { color: var(--cyan); text-shadow: 0 0 15px rgba(34, 211, 238, 0.4); }
-        .t-pink { color: var(--pink); text-shadow: 0 0 15px rgba(244, 63, 94, 0.4); }
-        .t-emerald { color: var(--emerald); text-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
-        .t-amber { color: var(--amber); text-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
+        h2 { font-family: 'Outfit', sans-serif; font-size: 3rem; font-weight: 800; color: #0f172a; margin-bottom: 25px; line-height: 1.1; letter-spacing: -1px; transform: translateY(20px); opacity: 0; transition: all 0.6s 0.4s ease;}
+        .swiper-slide-active h2 { transform: translateY(0); opacity: 1; }
 
-        .footer {
-            text-align: center;
-            margin-top: 80px;
-            padding: 40px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            color: #475569;
-            font-size: 1.1rem;
-        }
-        .footer span { color: var(--text-main); font-weight: 700; }
+        p.text-body { font-size: 1.3rem; line-height: 1.8; color: #334155; transform: translateY(20px); opacity: 0; transition: all 0.6s 0.5s ease;}
+        .swiper-slide-active p.text-body { transform: translateY(0); opacity: 1; }
+        
+        .highlight { color: #00695c; font-weight: 700; background: rgba(38, 166, 154, 0.2); padding: 4px 12px; border-radius: 8px;}
+        .source-tag { display: inline-block; margin-top: 30px; font-size: 0.9rem; font-weight: 600; color: #64748b; background: rgba(255,255,255,0.8); padding: 8px 16px; border-radius: 20px; border: 1px solid #cbd5e1; transform: translateY(20px); opacity: 0; transition: all 0.6s 0.6s ease;}
+        .swiper-slide-active .source-tag { transform: translateY(0); opacity: 1; }
 
-        @media (max-width: 1024px) {
-            .grid-layout { grid-template-columns: 1fr; }
-            .header h1 { font-size: 2.5rem; }
-        }
+        .med-img { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); transition: transform 0.5s ease; border: 4px solid #fff; background-color: #e2e8f0;}
+        .med-img:hover { transform: scale(1.05); }
+
+        .fallback-img { width: 100%; height: 100%; border-radius: 24px; background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1)); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; font-size: 5rem; color: #00897b; box-shadow: inset 0 10px 20px rgba(0,0,0,0.05); border: 4px solid rgba(255,255,255,0.6); transition: transform 0.5s ease; }
+        .fallback-img:hover { transform: scale(1.03); }
+
+        .layout-a .card-content { flex: 1.2; }
+        .layout-a .card-media { flex: 0.8; padding: 40px; }
+        
+        .layout-b { flex-direction: row-reverse; }
+        .layout-b .card-content { flex: 1; background: rgba(255,255,255,0.4); border-left: 1px solid rgba(255,255,255,0.6);}
+        .layout-b .card-media { flex: 1; padding: 40px; }
+
+        .layout-c .card-content { flex: 1.3; }
+        .layout-c .card-media { flex: 0.7; display: flex; flex-direction: column; gap: 20px; padding: 30px; }
+        .layout-c .card-media .med-img, .layout-c .card-media .fallback-img { height: 50%; }
+
+        .cover-card { flex-direction: column; text-align: center; justify-content: center; align-items: center; padding: 40px; border-top: 10px solid #00897b; background: rgba(255,255,255,0.85);}
+        .cover-card h1 { font-family: 'Outfit', sans-serif; font-size: 4.5rem; color: #00695c; margin-bottom: 10px; line-height: 1;}
+        .cover-card h3 { font-size: 1.8rem; color: #26a69a; margin-bottom: 50px; text-transform: uppercase; letter-spacing: 3px; font-weight: 600;}
+        
+        .info-pill-container { display: flex; gap: 30px; margin-bottom: 40px;}
+        .info-pill { background: #fff; padding: 20px 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: left; border: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 8px;}
+        .info-pill strong { color: #00695c; font-family: 'Outfit'; font-size: 1.1rem;}
+
+        .team-box { background: linear-gradient(135deg, #00695c, #00897b); padding: 30px 50px; border-radius: 25px; display: inline-block; color: white; box-shadow: 0 15px 30px rgba(0, 105, 92, 0.3);}
+        .team-box h4 { font-size: 1.3rem; margin-bottom: 20px; font-weight: 700;}
+        .team-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; list-style: none;}
+        .team-list li { background: rgba(255,255,255,0.2); backdrop-filter: blur(5px); padding: 12px 25px; border-radius: 30px; font-weight: 600; border: 1px solid rgba(255,255,255,0.3);}
+
+        .chart-wrapper { width: 100%; height: 450px; display: flex; justify-content: center; align-items: center; background: #fff; border-radius: 20px; padding: 20px; box-shadow: inset 0 4px 10px rgba(0,0,0,0.02);}
     </style>
 </head>
 <body>
-    <div class="particles"></div>
 
-    <div class="container">
-        
-        <div class="header">
-            <div class="badge">Ingeniería de Sistemas - Cesar Juan Carranza Quiroz</div>
-            <h1>Dashboard Analítico ODS 8</h1>
-            <p>Procesamiento matricial y modelado de datos oficiales de las Naciones Unidas sobre el Crecimiento Económico Inclusivo, Inflación y Desempleo Global.</p>
+    <header>
+        <div class="title-group">
+            <h1>PROGRAMA DE SALUD DEL ADULTO</h1>
+            <p>Atención Integral de Enfermería</p>
         </div>
-
-        <div class="grid-layout">
-
-            <!-- FILA 1: DESEMPLEO Y PROYECCIONES -->
-            
-            <!-- TARJETA 1 -->
-            <div class="card-3d scroll-anim" style="transition-delay: 0.1s;">
-                <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1542367406-0377fa1f21eb?auto=format&fit=crop&w=800&q=80');"></div>
-                <div class="card-content">
-                    <h2 class="card-title t-cyan">1. Organizar: Tasa de Desempleo</h2>
-                    <p class="card-desc">La ONU reporta un descenso del desempleo mundial en 2022 cayendo al <span class="hl">5.4%</span> desde el pico de <span class="hl">6.6%</span> en 2020, siendo inferior al <span class="hl">5.5%</span> de 2019. Se prevé que en 2023 baje al <span class="hl">5.3%</span>. Las matrices 2x2 estructuran esta evolución histórica.</p>
-                    
-                    <div class="math-container">
-                        <div class="math-header">Matriz Histórica de Desempleo Global</div>
-                        <div class="equation">
-                            <span class="operator">D =</span>
-                            <div class="matrix m2x2 t-cyan">
-                                <span>5.5%</span> <span>6.6%</span>
-                                <span>5.4%</span> <span>5.3%</span>
-                            </div>
-                        </div>
-                        <div class="math-footer">F1: [2019 | 2020] Pandemia <br>F2: [2022 | 2023] Recuperación</div>
-                    </div>
-                </div>
+        <div class="progress-wrapper">
+            <div class="progress-container">
+                <div class="progress-bar" id="pBar"></div>
             </div>
-
-            <!-- TARJETA 2 -->
-            <div class="card-3d scroll-anim" style="transition-delay: 0.2s;">
-                <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80');"></div>
-                <div class="card-content">
-                    <h2 class="card-title t-emerald">2. Comparar: Reducción de Impacto</h2>
-                    <p class="card-desc">Se calcula que en 2022 había <span class="hl">192 millones</span> de desempleados. Las previsiones indican que el desempleo mundial se situará en <span class="hl">191 millones</span> en 2023. La resta de matrices cuantifica la recuperación del mercado laboral.</p>
-                    
-                    <div class="math-container">
-                        <div class="math-header">Matriz 2022 (-) Matriz 2023 (Millones)</div>
-                        <div class="equation">
-                            <div class="matrix m1x1 t-pink"><span>192</span></div>
-                            <span class="operator">-</span>
-                            <div class="matrix m1x1 t-cyan"><span>191</span></div>
-                            <span class="operator">=</span>
-                            <div class="matrix m1x1 t-emerald"><span>1</span></div>
-                        </div>
-                        <div class="math-footer">El resultado matricial evidencia la reincorporación de 1 millón de personas al trabajo formal.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FILA 2: MACROECONOMÍA Y RECESIÓN -->
-
-            <!-- TARJETA 3 -->
-            <div class="card-3d scroll-anim" style="transition-delay: 0.1s;">
-                <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80');"></div>
-                <div class="card-content">
-                    <h2 class="card-title t-pink">3. Analizar: Desaceleración y Crisis</h2>
-                    <p class="card-desc">Múltiples crisis amenazan la economía. La inflación bajó de <span class="hl">7.5% a 5.2%</span>, pero la producción mundial se desaceleró hasta el <span class="hl">1.9%</span> en 2023 (respecto al 3% de 2022). Restamos vectores columna para medir la caída macroeconómica.</p>
-                    
-                    <div class="math-container">
-                        <div class="math-header">Vector 2023 (-) Vector 2022</div>
-                        <div class="equation">
-                            <div class="matrix m2x1 t-cyan"><span>5.2%</span><span>1.9%</span></div>
-                            <span class="operator">-</span>
-                            <div class="matrix m2x1 t-pink"><span>7.5%</span><span>3.0%</span></div>
-                            <span class="operator">=</span>
-                            <div class="matrix m2x1 t-amber"><span>-2.3%</span><span>-1.1%</span></div>
-                        </div>
-                        <div class="math-footer">Fila 1: Inflación | Fila 2: Producción.<br>Valores negativos reflejan contracción económica.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TARJETA 4 -->
-            <div class="card-3d scroll-anim" style="transition-delay: 0.2s;">
-                <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80');"></div>
-                <div class="card-content">
-                    <h2 class="card-title t-amber">4. Ajustar: Revisión de PIB</h2>
-                    <p class="card-desc">Debido a la resistencia del gasto de los hogares, el crecimiento económico mundial fue menos grave de lo previsto, proyectándose un <span class="hl">1.9%</span> con una revisión al alza de <span class="hl">0.4 puntos</span> para alcanzar el <span class="hl">2.3%</span> oficial. Evaluado con suma de matrices.</p>
-                    
-                    <div class="math-container">
-                        <div class="math-header">Suma de Vectores de Ajuste</div>
-                        <div class="equation">
-                            <div class="matrix m1x1 t-pink"><span>1.9%</span></div>
-                            <span class="operator">+</span>
-                            <div class="matrix m1x1 t-emerald"><span>0.4%</span></div>
-                            <span class="operator">=</span>
-                            <div class="matrix m1x1 t-cyan"><span>2.3%</span></div>
-                        </div>
-                        <div class="math-footer">Previsión Base + Ajuste Económico = PIB Real 2023.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FILA 3: BRECHAS SOCIALES -->
-
-            <!-- TARJETA 5 -->
-            <div class="card-3d scroll-anim" style="transition-delay: 0.1s;">
-                <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80');"></div>
-                <div class="card-content">
-                    <h2 class="card-title t-cyan">5. Proyectar: Digitalización</h2>
-                    <p class="card-desc">La pandemia aceleró el acceso a la financiación. A nivel mundial, la cantidad de adultos con cuentas bancarias subió del <span class="hl">62% en 2014 al 76% en 2021</span>. Los sistemas escalan estos datos matriciales para proyectar coberturas futuras del 100%.</p>
-                    
-                    <div class="math-container">
-                        <div class="math-header">Multiplicación por Escalar (Proyección +10%)</div>
-                        <div class="equation">
-                            <span class="operator" style="color:#f59e0b">1.10</span>
-                            <span class="operator">×</span>
-                            <div class="matrix m2x1 t-cyan"><span>62%</span><span>76%</span></div>
-                            <span class="operator">=</span>
-                            <div class="matrix m2x1 t-emerald"><span>68.2%</span><span>83.6%</span></div>
-                        </div>
-                        <div class="math-footer">Al aplicar un factor de crecimiento (1.10), el algoritmo genera previsiones de inclusión financiera.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TARJETA 6 -->
-            <div class="card-3d scroll-anim" style="transition-delay: 0.2s;">
-                <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80');"></div>
-                <div class="card-content">
-                    <h2 class="card-title t-pink">6. Clasificar: Crisis Juvenil</h2>
-                    <p class="card-desc">La tasa de desempleo juvenil es alarmante. A nivel mundial, casi <span class="hl">1 de cada 4 jóvenes</span> (289 millones) no cursaba estudios, ni trabajaba, ni recibía formación (NiNis). El modelado matricial segrega estos ratios para focalizar políticas urgentes.</p>
-                    
-                    <div class="math-container">
-                        <div class="math-header">Matriz de Proporción Demográfica</div>
-                        <div class="equation">
-                            <span class="operator">J =</span>
-                            <div class="matrix m2x1 t-pink">
-                                <span>25%</span>
-                                <span>75%</span>
-                            </div>
-                        </div>
-                        <div class="math-footer">F1: Sector NiNi (1 de 4) | F2: Población Activa.<br>Requiere inversión estatal urgente.</div>
-                    </div>
-                </div>
-            </div>
-
+            <div class="slide-counter" id="counter">01 / 80</div>
         </div>
+    </header>
 
-        <div class="footer">
-            Implementación y Algoritmia Visual por <span>Cesar Juan Carranza Quiroz</span><br>
-            Matemática para la Ingeniería IV | Dashboard oficial basado en los datos del ODS N° 8
-        </div>
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper" id="slide-container"></div>
     </div>
 
-    <!-- SCRIPT AVANZADO: EFECTO 3D TILT Y SCROLL -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // 1. Animación al hacer Scroll (Intersection Observer)
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.15 });
+        const dataSlides = [
+            { type: 'cover' },
+            { type: 'chart-bar' },
+            { type: 'chart-pie' },
+            { i: "fa-scale-balanced", t: "04. Base Normativa", p: "La atención integral del adulto está regida por la NTS N.° 229-MINSA/DGIESP-2025.", cat: "normativa" },
+            { i: "fa-users-viewfinder", t: "05. Población Objetivo", p: "La normativa establece intervenciones obligatorias dirigidas a personas adultas comprendidas entre los <span class='highlight'>30 a 59 años, 11 meses y 29 días de edad</span>.", cat: "normativa" },
+            { i: "fa-bullseye", t: "06. Objetivo General", p: "Establecer las disposiciones técnicas y administrativas para el cuidado integral de salud de la persona adulta en los establecimientos.", cat: "normativa" },
+            { i: "fa-list-check", t: "07. Objetivos Específicos", p: "Estandarizar criterios técnicos y administrativos para brindar el paquete de cuidado integral según las necesidades y riesgos identificados.", cat: "normativa" },
+            { i: "fa-hand-holding-hand", t: "08. Enfoque de Derechos", p: "Garantizar la igualdad de trato y la no discriminación, respetando la dignidad y autonomía del paciente durante toda su atención.", cat: "derechos" },
+            { i: "fa-earth-americas", t: "09. Enfoque Intercultural", p: "Brindar servicios con pertinencia cultural, integrando el conocimiento tradicional y respetando las creencias de las diversas comunidades.", cat: "derechos" },
+            { i: "fa-venus-mars", t: "10. Equidad de Género", p: "Promover servicios diferenciados que aborden las problemáticas específicas de mujeres y varones para eliminar la discriminación.", cat: "derechos" },
+            { i: "fa-person-walking", t: "11. Curso de Vida", p: "Reconocer que las condiciones y comportamientos desarrollados en la adultez influirán directamente en el estado de salud durante la vejez.", cat: "general" },
+            { i: "fa-map-location-dot", t: "12. Enfoque Territorial", p: "Articular esfuerzos con actores sociales y políticos locales para abordar efectivamente los determinantes sociales de la salud en la comunidad.", cat: "general" },
+            { i: "fa-hospital-user", t: "13. Captación Clínica", p: "La identificación del adulto puede realizarse en oferta fija, oferta móvil, telesalud o a través del trabajo de los agentes comunitarios.", cat: "enfermeria" },
+            { i: "fa-id-card", t: "14. Proceso de Admisión", p: "Apertura de la Historia Clínica y Ficha Familiar, verificación de afiliación (SIS) y entrega del Carnet de Cuidado Integral de Salud.", cat: "enfermeria" },
+            { i: "fa-stethoscope", t: "15. Triaje de Enfermería", p: "Identificación de signos de alarma, toma de medidas antropométricas (peso, talla, PAB) y control estricto de funciones vitales.", cat: "enfermeria" },
+            { i: "fa-notes-medical", t: "16. Plan de Cuidado", p: "Instrumento elaborado en la primera consulta que programa la provisión de servicios según los riesgos sanitarios identificados en el paciente.", cat: "enfermeria" },
+            { i: "fa-chalkboard-user", t: "17. Educación Sanitaria", p: "Herramienta clave en enfermería para proporcionar información clara, permitiendo al adulto tomar decisiones favorables para su bienestar.", cat: "enfermeria" },
+            { i: "fa-shield-heart", t: "18. Autocuidado Activo", p: "El programa busca que el adulto reconozca factores de riesgo, adopte medidas preventivas y participe activamente en el cuidado de su salud.", cat: "nutricion" },
+            { i: "fa-house-chimney-medical", t: "19. Determinantes Sociales", p: "La atención integral no solo aborda el aspecto físico, sino las condiciones sociales, económicas, culturales y ambientales del individuo.", cat: "normativa" },
+            { i: "fa-infinity", t: "20. Cuidado Continuo", p: "El enfoque actual del MINSA busca no esperar a que aparezca la enfermedad, sino intervenir anticipadamente mediante tamizajes y seguimiento.", cat: "enfermeria" },
+            { i: "fa-heart-pulse", t: "21. Promoción de la Salud", p: "Componente orientado a empoderar a la población adulta para que asuma el control sobre su salud mediante prácticas y entornos saludables.", cat: "nutricion" },
+            { i: "fa-apple-whole", t: "22. Alimentación Saludable", p: "Orientación sobre dietas equilibradas. Promueve la reducción del consumo de azúcares, sodio y alimentos ultraprocesados.", cat: "nutricion" },
+            { i: "fa-person-running", t: "23. Actividad Física", p: "Medida preventiva esencial frente a factores de riesgo crónicos (cardiovasculares, diabetes) que contribuye al control del peso corporal.", cat: "nutricion" },
+            { i: "fa-hands-bubbles", t: "24. Higiene Personal", p: "Fomento sistemático del lavado de manos adecuado, higiene bucal, cuidado de la piel y mantenimiento de condiciones salubres en la vivienda.", cat: "higiene" },
+            { i: "fa-car-burst", t: "25. Seguridad Vial", p: "Promoción de comportamientos responsables y cultura de tránsito para disminuir significativamente los riesgos de lesiones y accidentes.", cat: "general" },
+            { i: "fa-ribbon", t: "26. Salud Sexual", p: "Educación para la prevención de ITS, embarazos no planificados, orientación sobre métodos anticonceptivos y salud reproductiva.", cat: "sexual" },
+            { i: "fa-ban-smoking", t: "27. Prevención del Tabaco", p: "Enfermería debe identificar el consumo, brindar consejería sobre los daños y facilitar el acceso a servicios para abandonar el hábito.", cat: "mental" },
+            { i: "fa-wine-glass-empty", t: "28. Consumo de Alcohol", p: "Uso de instrumentos de tamizaje para detectar conductas perjudiciales tempranas y derivar al adulto a atención especializada.", cat: "mental" },
+            { i: "fa-triangle-exclamation", t: "29. Identificación de Riesgos", p: "Reconocer condiciones (alimentación, sedentarismo, antecedentes familiares) que aumentan la posibilidad de desarrollar enfermedades crónicas.", cat: "cardio" },
+            { i: "fa-box-archive", t: "30. Paquete Priorizado", p: "Conjunto de intervenciones enfocadas en mantener la salud y detectar de forma temprana riesgos relacionados con enfermedades no transmisibles.", cat: "cardio" },
+            { i: "fa-virus-slash", t: "31. Enfermedades No Transmisibles", p: "Afecciones de larga duración (Diabetes, HTA) que representan el principal problema de salud pública y morbilidad en el adulto.", cat: "cardio" },
+            { i: "fa-heart-circle-exclamation", t: "32. Hipertensión Arterial", p: "Requiere control periódico ya que puede permanecer asintomática por años, elevando silenciosamente el riesgo de accidentes cardiovasculares.", cat: "cardio" },
+            { i: "fa-droplet", t: "33. Diabetes Mellitus 2", p: "Se indica la evaluación de glucosa basada en la edad y presencia de factores como obesidad o antecedentes familiares de diabetes.", cat: "cardio" },
+            { i: "fa-weight-scale", t: "34. Obesidad y Riesgo", p: "La acumulación excesiva de grasa, evaluada mediante el IMC, es el factor detonante para enfermedades cardiovasculares y metabólicas.", cat: "nutricion" },
+            { i: "fa-pills", t: "35. Adherencia Terapéutica", p: "La familia y el personal apoyan la adherencia; se educa al paciente para que no suspenda ni modifique tratamientos por cuenta propia.", cat: "enfermeria" },
+            { i: "fa-microscope", t: "36. Tamizajes Oportunos", p: "Las evaluaciones y tamizajes permiten identificar tempranamente riesgos. Facilitan la orientación, tratamiento o seguimiento especializado.", cat: "laboratorio" },
+            { i: "fa-ruler", t: "37. Evaluación Antropométrica", p: "Permite clasificar el estado nutricional del paciente mediante el cálculo del IMC y detectar situaciones de riesgo metabólico crónico.", cat: "laboratorio" },
+            { i: "fa-tape", t: "38. Perímetro Abdominal", p: "Procedimiento clave. El aumento del perímetro abdominal se relaciona con mayor riesgo de diabetes tipo 2 e hipertensión arterial.", cat: "laboratorio" },
+            { i: "fa-vial", t: "39. Glucosa en Sangre", p: "Prueba de laboratorio (azar, ayunas o tolerancia) para detectar alteraciones del metabolismo de la glucosa en pacientes de riesgo.", cat: "laboratorio" },
+            { i: "fa-vial-circle-check", t: "40. Perfil Lipídico", p: "Examen en sangre venosa que mide Colesterol total, HDL, triglicéridos y LDL para identificar dislipidemias peligrosas.", cat: "laboratorio" },
+            { i: "fa-ribbon", t: "41. Prevención Oncológica", p: "Intervenciones dirigidas a la prevención y detección temprana de cáncer de cuello uterino, mama, próstata, colon y piel.", cat: "cancer" },
+            { i: "fa-person-dress", t: "42. Cáncer Cuello Uterino", p: "Estrechamente ligado a la infección persistente por Virus del Papiloma Humano (VPH). Su prevención incluye tamizajes y educación.", cat: "cancer" },
+            { i: "fa-microscope", t: "43. Papanicolaou (PAP)", p: "Prueba de citología cervicouterina indispensable para detectar cambios celulares precancerosos de manera temprana en la mujer adulta.", cat: "cancer" },
+            { i: "fa-eye", t: "44. Inspección IVAA", p: "Aplicación clínica de ácido acético sobre el cuello uterino que permite la observación directa de alteraciones sospechosas.", cat: "cancer" },
+            { i: "fa-dna", t: "45. Detección Molecular VPH", p: "Prueba avanzada que identifica los genotipos de VPH de alto riesgo asociados al desarrollo de lesiones oncológicas.", cat: "cancer" },
+            { i: "fa-person-breastfeeding", t: "46. Cáncer de Mama", p: "La prevención exige educación para el reconocimiento de cambios en las mamas, examen clínico anual y mamografía bianual preventiva.", cat: "cancer" },
+            { i: "fa-x-ray", t: "47. Tamizaje Mamográfico", p: "Estudio radiológico especializado para identificar microcalcificaciones y signos no palpables sugestivos de cáncer de mama.", cat: "cancer" },
+            { i: "fa-person", t: "48. Cáncer de Próstata", p: "Evaluación médica en hombres que incluye palpación digital y dosaje de antígeno (PSA), considerando la edad y antecedentes.", cat: "cancer" },
+            { i: "fa-disease", t: "49. Cáncer Colorrectal", p: "Estrategia preventiva basada en el examen clínico y la indicación de la prueba de sangre oculta en heces para detección precoz.", cat: "cancer" },
+            { i: "fa-sun", t: "50. Cáncer de Piel", p: "Evaluación médica preventiva que sigue la regla ABCDE (Asimetría, Borde, Color, Diámetro, Evolución) para examinar lesiones.", cat: "cancer" },
+            { i: "fa-brain", t: "51. Salud Mental", p: "Es un componente obligatorio del cuidado integral. Identifica problemas que afectan el bienestar emocional, familiar y laboral.", cat: "mental" },
+            { i: "fa-face-frown", t: "52. Trastornos Depresivos", p: "Aplicación del Cuestionario PHQ-9 (9 ítems) para obtener un diagnóstico provisional y valorar la severidad de los síntomas depresivos.", cat: "mental" },
+            { i: "fa-martini-glass-empty", t: "53. Consumo de Alcohol", p: "Evaluación mediante el test AUDIT-C. En hombres un puntaje ≥4 es positivo; en mujeres, ≥3 indica consumo perjudicial o abuso.", cat: "mental" },
+            { i: "fa-hand-fist", t: "54. Prevención de Violencia", p: "Detección de violencia física o psicológica. Enfermería mantiene escucha activa y deriva a redes de protección social.", cat: "mental" },
+            { i: "fa-clipboard-question", t: "55. Tamizaje WAST", p: "Herramienta de detección de violencia. Un puntaje total igual o mayor a 15 confirma un caso positivo que requiere intervención.", cat: "mental" },
+            { i: "fa-comments", t: "56. Orientación Emocional", p: "Ante un tamizaje con resultado de riesgo, el paciente recibe consejería y es derivado oportunamente a servicios de salud mental.", cat: "mental" },
+            { i: "fa-user-lock", t: "57. Confidencialidad", p: "Todo procedimiento de tamizaje mental y detección de violencia exige estricta privacidad y protección de datos del paciente.", cat: "mental" },
+            { i: "fa-eye", t: "58. Salud Ocular", p: "Examen para determinar la agudeza visual y detectar errores refractivos o enfermedades externas del ojo en la adultez.", cat: "dental" },
+            { i: "fa-tooth", t: "59. Examen Bucal", p: "Evaluación estomatológica preventiva: revisión de encías, caries, edentulismo e instrucción en técnicas de higiene oral fluorada.", cat: "dental" },
+            { i: "fa-virus", t: "60. Enfermedades Infecciosas", p: "Promoción de la prevención, consejería y tamizaje diagnóstico para sífilis y VIH en la población adulta sexualmente activa.", cat: "vacunas" },
+            { i: "fa-lungs", t: "61. Control de Tuberculosis", p: "Identificación prioritaria de sintomáticos respiratorios (tos por más de 15 días) para el examen inmediato y diagnóstico precoz.", cat: "vacunas" },
+            { i: "fa-mosquito", t: "62. Zoonosis y Metaxénicas", p: "Detección y diagnóstico oportuno ante sospechas de dengue u otras enfermedades según el escenario de riesgo epidemiológico local.", cat: "vacunas" },
+            { i: "fa-syringe", t: "63. Esquema de Vacunación", p: "Garantizar la protección del adulto mediante la administración de vacunas oficiales: Antitetánica, Influenza, Neumococo y Hepatitis B.", cat: "vacunas" },
+            { i: "fa-baby", t: "64. Planificación Familiar", p: "Consejería y administración de métodos anticonceptivos (orales, inyectables) promoviendo decisiones informadas y voluntarias.", cat: "sexual" },
+            { i: "fa-user-nurse", t: "65. Salud Ocupacional", p: "Vigilancia e identificación de enfermedades ocupacionales y factores de riesgo físicos o químicos presentes en el entorno laboral.", cat: "enfermeria" },
+            { i: "fa-user-doctor", t: "66. Rol de Enfermería", p: "Función esencial en el cuidado integral. Participa en promoción, prevención, detección de riesgos, seguimiento y recuperación.", cat: "enfermeria" },
+            { i: "fa-clipboard-user", t: "67. Valoración Integral", p: "La primera intervención de enfermería que recopila enfermedades previas, antecedentes familiares y estado general del adulto.", cat: "enfermeria" },
+            { i: "fa-heart-pulse", t: "68. Control de Signos Vitales", p: "La medición de la presión arterial, frecuencia cardíaca y respiratoria requiere técnica precisa e instrumental médico calibrado.", cat: "enfermeria" },
+            { i: "fa-bullhorn", t: "69. Comunicación Educativa", p: "Enfermería utiliza un lenguaje sencillo y respetuoso, verificando que el paciente comprenda cabalmente las indicaciones clínicas.", cat: "enfermeria" },
+            { i: "fa-hands-holding-circle", t: "70. Participación en Tamizajes", p: "El profesional prepara a la persona, orienta sobre los procedimientos (como el Papanicolaou) y ejecuta el seguimiento de resultados.", cat: "enfermeria" },
+            { i: "fa-house-medical", t: "71. Visita Domiciliaria", p: "Estrategia clave de la oferta móvil que acerca el cuidado al entorno de la familia, identificando in situ los factores de riesgo.", cat: "general" },
+            { i: "fa-truck-medical", t: "72. Coordinación y Referencia", p: "Ante hallazgos anormales que superan la capacidad resolutiva, enfermería articula el traslado o derivación a especialistas.", cat: "enfermeria" },
+            { i: "fa-laptop-medical", t: "73. Registro Oficial (HIS)", p: "Toda actividad, tamizaje e intervención debe documentarse rigurosamente en los sistemas de información del Ministerio de Salud.", cat: "general" },
+            { i: "fa-people-roof", t: "74. Participación Familiar", p: "La familia brinda soporte emocional y promueve la actividad física, constituyendo la principal red de apoyo del adulto.", cat: "general" },
+            { i: "fa-users", t: "75. Participación Comunitaria", p: "Juntas vecinales y autoridades locales organizan campañas preventivas extramurales para acercar los servicios a la población.", cat: "general" },
+            { i: "fa-mobile-screen", t: "76. Telesalud", p: "Modalidad que utiliza tecnologías de información para teleorientación y monitoreo, facilitando el acceso en zonas distantes.", cat: "general" },
+            { i: "fa-person-arrow-up-from-line", t: "77. Atención 30 a 40 años", p: "Prioriza la evaluación del IMC, perímetro abdominal y control de presión arterial para frenar riesgos metabólicos a tiempo.", cat: "cardio" },
+            { i: "fa-person-cane", t: "78. Atención 40 a 59 años", p: "Se hacen obligatorias las evaluaciones periódicas de enfermedades crónicas y los tamizajes de detección temprana de cáncer.", cat: "cancer" },
+            { i: "fa-folder-open", t: "79. Instrumento PAIFAM", p: "Aplicación del Paquete de Atención Integral de la Familia para generar corresponsabilidad grupal en el cuidado de la salud.", cat: "general" },
+            { i: "fa-award", t: "80. Envejecimiento Saludable", p: "La prevención de factores de riesgo y el control oportuno durante la adultez son la única garantía para una vejez funcional.", cat: "general" }
+        ];
 
-            document.querySelectorAll('.scroll-anim').forEach(el => observer.observe(el));
+        // BASE DE DATOS EXTENDIDA (60+ URLs estáticas sin random, para evitar bloqueos y caras fuera de lugar)
+        const thematicImages = {
+            "normativa": [
+                "1584982751601-97dcc096659c", "1516549655169-df83a0774514", "1551076805-e1869033e561", "1504439468489-c89cd3cdf4ce", "1582750433449-648ed127d09e", "1576091160550-2173dba999ef"
+            ],
+            "nutricion": [
+                "1490645935967-10de6ba17061", "1512621776951-a57141f2eefd", "1498837117447-411a7667a4ed", "1494390248439-011afbc865d8", "1505253716362-af11854e42fb", "1540420773420-3366774f5237"
+            ],
+            "cardio": [
+                "1532938911079-1b06ac7ceec7", "1505751172876-fa1923c5c528", "1628348070889-cb656235b4af", "1578496481744-42f56b5a32ba", "1527613426401-41d9efa931c8"
+            ],
+            "laboratorio": [
+                "1579684385127-1ef15d508118", "1581093458791-9f3c3900df4b", "1532187863486-5644c366e2c3", "1576086213369-97a306d36557", "1581091226825-a6a2a5aee158"
+            ],
+            "cancer": [
+                "1579154204601-01588f351e67", "1581595220892-b0739db3ba8c", "1579684453401-5c317bf764f6", "1631557021676-e9c402120e6a", "1576091160399-112ba8d25d1d"
+            ],
+            "mental": [
+                "1573497019940-1c28c88b4f3e", "1552693673-1bf958298935", "1527137628882-70b9231f24d3", "1505751172876-fa1923c5c528", "1622253692010-333f2da6031d", "1584982751601-97dcc096659c"
+            ],
+            "dental": [
+                "1606811841689-23dfacce3e95", "1512069772995-268e59265f24", "1598256989814-727588ae1b7e", "1588776814546-1ffcf47267a5", "1588776814407-74070a2559e7"
+            ],
+            "vacunas": [
+                "1618606495166-5e06a5b28d68", "1632349733418-f29910c85b59", "1615461715610-d29a5fa2c2ce", "1579684385127-1ef15d508118", "1584982751601-97dcc096659c"
+            ],
+            "enfermeria": [
+                "1527613426401-41d9efa931c8", "1576091160550-2173dba999ef", "1582750433449-648ed127d09e", "1551076805-e1869033e561", "1516549655169-df83a0774514", "1519494026892-80bbd2d6fd0d", "1584982751601-97dcc096659c"
+            ],
+            "sexual": [
+                "1552693673-1bf958298935", "1573497019940-1c28c88b4f3e", "1516549655169-df83a0774514", "1576091160550-2173dba999ef", "1505751172876-fa1923c5c528"
+            ],
+            "derechos": [
+                "1573497019940-1c28c88b4f3e", "1582750433449-648ed127d09e", "1552693673-1bf958298935", "1527613426401-41d9efa931c8"
+            ],
+            "higiene": [
+                "1584515933615-5f9cb256b158", "1584467735812-07d4b4a11c12", "1584515978131-016ff5bc4d54", "1584515865239-5bb8e390c9b0"
+            ],
+            "general": [
+                "1551076805-e1869033e561", "1576091160550-2173dba999ef", "1519494026892-80bbd2d6fd0d", "1504439468489-c89cd3cdf4ce", "1512678080530-7760d81fbc36", "1584982751601-97dcc096659c", "1532938911079-1b06ac7ceec7"
+            ]
+        };
 
-            // 2. Efecto 3D Tilt super suave usando JS Vanilla
-            const cards = document.querySelectorAll('.card-3d');
-            
-            cards.forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    // Ajuste de sensibilidad del giro (a menor divisor, mayor giro)
-                    const rotateX = ((y - centerY) / centerY) * -12; 
-                    const rotateY = ((x - centerX) / centerX) * 12;
-                    
-                    // Aplicar transformación a la tarjeta
-                    card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
-                    card.style.transition = 'transform 0.1s ease';
-                    
-                    // Efecto de reflejo/brillo dinámico
-                    card.style.border = '1px solid rgba(255,255,255,0.3)';
-                });
+        const container = document.getElementById('slide-container');
+        let htmlStr = '';
 
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-                    card.style.transition = 'transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)';
-                    card.style.border = '1px solid rgba(255, 255, 255, 0.08)';
-                });
-            });
+        dataSlides.forEach((d, index) => {
+            if (d.type === 'cover') {
+                htmlStr += `
+                <div class="swiper-slide">
+                    <div class="glass-card cover-card">
+                        <h1>PROGRAMA DE SALUD DEL ADULTO</h1>
+                        <h3>Atención Integral de Enfermería</h3>
+                        <div class="info-pill-container">
+                            <div class="info-pill">
+                                <span>Docente</span>
+                                <strong>Lic. Silvia Siccha Samana</strong>
+                                <span>Tema</span>
+                                <strong>Atención Integral NTS N° 229</strong>
+                            </div>
+                            <div class="info-pill">
+                                <span>Ciclo</span>
+                                <strong>2° Ciclo B</strong>
+                                <span>Año</span>
+                                <strong>2026</strong>
+                            </div>
+                        </div>
+                        <div class="team-box">
+                            <h4><i class="fas fa-users"></i> Integrantes del Grupo</h4>
+                            <ul class="team-list">
+                                <li>Juarez Ruiz Guada</li>
+                                <li>De La Cruz Lecca Carmen</li>
+                                <li>Ruiz Sandoval Elber Oliver</li>
+                                <li>Gomez Paredes Keyli</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>`;
+            } else if (d.type === 'chart-bar') {
+                htmlStr += `
+                <div class="swiper-slide">
+                    <div class="glass-card layout-a">
+                        <div class="card-content">
+                            <div class="icon-box"><i class="fas fa-chart-column"></i></div>
+                            <h2>02. Prevalencia de Riesgos (ENT)</h2>
+                            <p class="text-body">Distribución de las Enfermedades No Transmisibles prioritarias en la evaluación clínica del adulto peruano.</p>
+                            <span class="source-tag"><i class="fas fa-file-pdf"></i> RM N.° 310-2025-MINSA</span>
+                        </div>
+                        <div class="card-media">
+                            <div class="chart-wrapper"><canvas id="barChart"></canvas></div>
+                        </div>
+                    </div>
+                </div>`;
+            } else if (d.type === 'chart-pie') {
+                htmlStr += `
+                <div class="swiper-slide">
+                    <div class="glass-card layout-b">
+                        <div class="card-content">
+                            <div class="icon-box"><i class="fas fa-chart-pie"></i></div>
+                            <h2>03. Foco en Salud Mental</h2>
+                            <p class="text-body">Proporción de instrumentos de tamizaje de salud mental priorizados para intervención clínica oportuna en el primer nivel de atención.</p>
+                            <span class="source-tag"><i class="fas fa-file-pdf"></i> RM N.° 310-2025-MINSA</span>
+                        </div>
+                        <div class="card-media">
+                            <div class="chart-wrapper"><canvas id="pieChart"></canvas></div>
+                        </div>
+                    </div>
+                </div>`;
+            } else {
+                let layoutClass = "";
+                let mod = index % 3;
+                if (mod === 0) layoutClass = "layout-a"; 
+                if (mod === 1) layoutClass = "layout-b"; 
+                if (mod === 2) layoutClass = "layout-c"; 
+
+                let category = d.cat || "general";
+                let imgPool = thematicImages[category];
+                
+                // Rotar para no usar siempre las mismas 2 en layouts dobles
+                let imgID1 = imgPool[(index) % imgPool.length];
+                let imgID2 = imgPool[(index + 1) % imgPool.length];
+                
+                let fallbackIcon = d.i || "fa-notes-medical";
+                let errorFallback = `onerror="this.onerror=null; this.outerHTML='<div class=\\'fallback-img\\'><i class=\\'fas ${fallbackIcon}\\'></i></div>';"`;
+
+                // Aquí construimos la etiqueta de imagen asegurando lazy loading y la URL segura de alta calidad
+                let mediaHTML = "";
+                if (mod === 0 || mod === 1) {
+                    mediaHTML = `<img class="med-img" src="https://images.unsplash.com/photo-${imgID1}?w=800&q=80&fm=jpg" alt="${category}" loading="lazy" ${errorFallback}>`;
+                } else {
+                    mediaHTML = `
+                        <img class="med-img" src="https://images.unsplash.com/photo-${imgID1}?w=800&q=80&fm=jpg" alt="${category} 1" loading="lazy" ${errorFallback}>
+                        <img class="med-img" src="https://images.unsplash.com/photo-${imgID2}?w=800&q=80&fm=jpg" alt="${category} 2" loading="lazy" ${errorFallback}>
+                    `;
+                }
+
+                htmlStr += `
+                <div class="swiper-slide">
+                    <div class="glass-card ${layoutClass}">
+                        <div class="card-content">
+                            <div class="icon-box"><i class="fas ${d.i}"></i></div>
+                            <h2>${d.t}</h2>
+                            <p class="text-body">${d.p}</p>
+                            <span class="source-tag"><i class="fas fa-file-pdf"></i> RM N.° 310-2025-MINSA</span>
+                        </div>
+                        <div class="card-media">
+                            ${mediaHTML}
+                        </div>
+                    </div>
+                </div>`;
+            }
         });
+        container.innerHTML = htmlStr;
+
+        const swiper = new Swiper(".mySwiper", {
+            direction: "vertical",
+            slidesPerView: 1,
+            spaceBetween: 0,
+            mousewheel: true,
+            keyboard: { enabled: true },
+            speed: 1000,
+            effect: "slide" 
+        });
+
+        const pBar = document.getElementById('pBar');
+        const counter = document.getElementById('counter');
+        
+        swiper.on('slideChange', function () {
+            let current = swiper.activeIndex + 1;
+            counter.innerHTML = `${current.toString().padStart(2, '0')} / 80`;
+            pBar.style.width = ((current / 80) * 100) + '%';
+        });
+        pBar.style.width = ((1 / 80) * 100) + '%';
+
+        setTimeout(() => {
+            new Chart(document.getElementById('barChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Sobrepeso', 'Hipertensión', 'Diabetes', 'Dislipidemia'],
+                    datasets: [{
+                        label: 'Prevalencia (%)',
+                        data: [85, 75, 60, 50],
+                        backgroundColor: ['#00695c', '#00897b', '#26a69a', '#80cbc4'],
+                        borderRadius: 10
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            });
+
+            new Chart(document.getElementById('pieChart').getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Depresión (PHQ-9)', 'Violencia (WAST)', 'Alcohol (AUDIT)'],
+                    datasets: [{
+                        data: [40, 35, 25],
+                        backgroundColor: ['#00695c', '#00897b', '#26a69a'],
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'right' } } }
+            });
+        }, 1000);
     </script>
 </body>
 </html>
